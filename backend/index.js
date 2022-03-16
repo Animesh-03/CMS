@@ -1,14 +1,14 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
+const dotenv = require('dotenv');   //Used to access environment variables in env
+const cors = require('cors');   //Enables frontend to send requests to backend
 
 
 const app = express();
-dotenv.config();
+dotenv.config();    //Configure backend by getting the .env file
 
-app.use(cors());
+app.use(cors());    //Enable CORS
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT; //Acess the PORT variable in the .env
 
 app.get("/", (req,res) => {
     res.json({response: "Working"});

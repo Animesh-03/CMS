@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -8,15 +7,17 @@ function App() {
   const [msg,setMsg] = useState("");
 
   useEffect(() => {
+    //Send a get request to the backend
     axios.get("http://localhost:3000")
       .then(res => {
-        setMsg(res.data.response);
+        setMsg(res.data.response);  //Set the message to the response recieved
       });
+
   },[])
 
   return (
     <div className="App">
-      <p>Msg is {msg}</p>
+      <p>Msg is {msg}</p> {/*Display the message*/}
     </div>
   );
 }
