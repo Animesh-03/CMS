@@ -4,20 +4,20 @@ import './App.css';
 
 function App() {
 
-  const [msg,setMsg] = useState("");
+  const [msg,setMsg] = useState({});
 
   useEffect(() => {
     //Send a get request to the backend
     axios.get("http://localhost:3000")
       .then(res => {
-        setMsg(res.data.response);  //Set the message to the response recieved
+        setMsg(res.data);  //Set the message to the response recieved
       });
 
   },[])
 
   return (
     <div className="App">
-      <p>Msg is {msg}</p> {/*Display the message*/}
+      <p>Msg is {msg.length && msg[0].username} </p> {/*Display the message*/}
     </div>
   );
 }
