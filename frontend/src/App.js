@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
+import Login from './Components/Login/Login'
+import AdminLogin from './Components/Login/AdminLogin';
+import StudentLogin from './Components/Login/StudentLogin';
+import ProfessorLogin from './Components/Login/ProfessorLogin';
+import AdminContextProvider from './Components/Contexts/AdminContext';
+import AdminDashboard from './Components/Dashboard/AdminDashboard';
 
 function App() {
 
-  const [msg,setMsg] = useState({});
-
-  useEffect(() => {
-    //Send a get request to the backend
-    axios.get("http://localhost:3000")
-      .then(res => {
-        setMsg(res.data);  //Set the message to the response recieved
-      });
-
-  },[])
 
   return (
     <div className="App">
-      <p>Msg is {msg.length && msg[0].username} </p> {/*Display the message*/}
+      <AdminContextProvider> {/* Passes the admin user around all the routes */}
+        <Router>
+          <Routes>
+
+            <Route path="/" element={<Login />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/student" element={<StudentLogin />} />
+            <Route path="/professor" element={<ProfessorLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+          </Routes>
+        </Router>
+      </AdminContextProvider>
+      
     </div>
   );
 }
