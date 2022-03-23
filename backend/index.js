@@ -14,14 +14,15 @@ const connection = mysql.createConnection({
 });
 
 app.use(cors());    //Enable CORS
+app.use(express.urlencoded({extended: true})); // Enables accessing request parameters
+app.use(express.json());
 
 const PORT = process.env.PORT; //Acess the PORT variable in the .env
-
-app.get("/login/admin", (req,res) => {
-    //Get all admins form DB and send to frontend
-    connection.query("SELECT * FROM ADMIN", (error, results, fields) => {
+//URL when admin logins
+app.post("/login/admin", (req,res) => {
+    //Gets the user with the given username
+    connection.query("SELECT * FROM ADMIN WHERE username='" + req.body.data.username + "'", (error, results, fields) => {
         res.json(results);
-        console.log(req);
     });
 });
 

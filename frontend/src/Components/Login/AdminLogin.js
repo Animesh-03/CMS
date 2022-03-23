@@ -5,23 +5,28 @@ import { UserContext } from '../Contexts/UserContext';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
-    const {user, loginUser} = useContext(UserContext);
+    const {loginUser} = useContext(UserContext);
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Submitted");
-
-        axios.get("http://localhost:3000/login/admin",{
-            username: username,
+        e.preventDefault(); //Prevents page from reloading on its own
+        //Sends a request to get the user with the username given
+        axios.post("http://localhost:3000/login/admin",{
+            data: {username: username}
         }).then(res => {
-
+            //If a user is found with the given username and password matches then login the admin
+            if(res.data.length !== 0 && password === res.data[0].password)
+            {
+                loginUser({username: username});
+                navigate("/admin/dashboard");
+            }
+            else
+            {
+                alert("Invalid username/password");                
+            }
         });
-
-        loginUser({username: username});
-        navigate("/admin/dashboard");
 
 
         

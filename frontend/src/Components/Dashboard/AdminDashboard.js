@@ -2,15 +2,12 @@ import React, { useContext } from 'react';
 import { UserContext } from '../Contexts/UserContext';
 
 const AdminDashboard = () => {
-    // const {adminUser, isAdminAuthenticated} = useContext(AdminContext); //Gets the currentUser and isAuthenticated from the UserContext
-    // console.log(adminUser);
-
-    const {user, isAuth} = useContext(UserContext);
+    const {user, isAuth} = useContext(UserContext); //Gets the user and auth variable from User Context
 
     return ( 
         <div className='admin-dashboard'>
-            <p>Username is {user.username}</p>
-            <p>Authenicated: {isAuth.toString()}</p>
+            <p>Username is {user != null && user.username}</p>
+            <p>Authenicated: {isAuth != null && isAuth.toString()}</p>
         </div>
      );
 }
