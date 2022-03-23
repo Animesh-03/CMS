@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router';
-import { AdminContext } from '../Contexts/AdminContext';
+import axios from 'axios';
+import { UserContext } from '../Contexts/UserContext';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
-    const {changeUser, toggleAuth} = useContext(AdminContext);
+    const {user, loginUser} = useContext(UserContext);
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -13,12 +14,17 @@ const AdminLogin = () => {
         e.preventDefault();
         console.log("Submitted");
 
-        changeUser({username: username});
-        toggleAuth(true);
+        axios.get("http://localhost:3000/login/admin",{
+            username: username,
+        }).then(res => {
 
-        password.toString();    //Remove line later
+        });
 
+        loginUser({username: username});
         navigate("/admin/dashboard");
+
+
+        
     }
 
     return ( 

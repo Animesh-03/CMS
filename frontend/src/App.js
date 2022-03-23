@@ -5,15 +5,15 @@ import Login from './Components/Login/Login'
 import AdminLogin from './Components/Login/AdminLogin';
 import StudentLogin from './Components/Login/StudentLogin';
 import ProfessorLogin from './Components/Login/ProfessorLogin';
-import AdminContextProvider from './Components/Contexts/AdminContext';
 import AdminDashboard from './Components/Dashboard/AdminDashboard';
+import UserContextProvider from './Components/Contexts/UserContext';
 
 function App() {
 
 
   return (
     <div className="App">
-      <AdminContextProvider> {/* Passes the admin user around all the routes */}
+      <UserContextProvider> {/* Passes the user around all the routes */}
         <Router>
           <Routes>
 
@@ -25,7 +25,7 @@ function App() {
 
           </Routes>
         </Router>
-      </AdminContextProvider>
+      </UserContextProvider>
       
     </div>
   );

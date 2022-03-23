@@ -1,90 +1,77 @@
+CREATE TABLE IF NOT EXISTS ADMIN(
+	username varchar(30) primary key,
+    password varchar(20),
+    first_name varchar(30),
+    last_name varchar(30)
+);
+
 CREATE TABLE IF NOT EXISTS Student(
 student_id char(13) primary key,
  first_name varchar(30),
  last_name varchar(30),
  password varchar(20)
- );
- 
- CREATE TABLE IF NOT EXISTS Student_Mobile(
-	student_id varchar(13),
-    mob_no varchar(13),
-    foreign key(student_id) references Student(student_id),
-    primary key(student_id,mob_no)
 );
 
-CREATE TABLE IF NOT EXISTS ADMIN(
-	username varchar(30) primary key,
-    pass varchar(20),
+CREATE TABLE IF NOT EXISTS PROFESSOR(
+	professor_id varchar(30) primary key,
+    password varchar(30),
+    email varchar(100),
     first_name varchar(30),
     last_name varchar(30)
 );
 
-CREATE TABLE IF NOT EXISTS PROFESSOR(
-	id varchar(8) primary key,
-    first_name varchar(30),
-    last_name varchar(30),
-    email varchar(100),
-    pass varchar(20)
-);
-
-CREATE TABLE IF NOT EXISTS Professor_Mobile(
-	professor_id varchar(8),
+CREATE TABLE IF NOT EXISTS PROF_MOBNO(
+	username varchar(30),
     mob_no varchar(13),
-    foreign key(professor_id) references Professor(id),
-    primary key(professor_id,mob_no)
-);
-
-CREATE TABLE IF NOT EXISTS COURSE(
-	id varchar(8) primary key,
-    course_name varchar(30),
-    ic varchar(6),
-    semester char(6),
-    foreign key(ic) references Professor(id)
+    primary key(username,mob_no)
 );
     
-CREATE TABLE IF NOT EXISTS Section(
-	id varchar(3) primary key,
-    course_id varchar(8),
-    foreign key(course_id) references Course(id)
+CREATE TABLE IF NOT EXISTS COURSE(
+	course_id varchar(50) primary key,
+    ic varchar(30),
+	course_name varchar(30),
+    foreign key(ic) references Professor(Professor_id)
+);
+  
+CREATE TABLE IF NOT EXISTS SECTION(
+	section_id varchar(3),
+    course_id varchar(50),
+    primary key(section_id,course_id)
 );
 
-CREATE TABLE IF NOT EXISTS Topic(
-	id int,
+CREATE TABLE IF NOT EXISTS STUDIES(
+	student_id varchar(13),
     section_id varchar(3),
-    name varchar(30),
-    foreign key(section_id) references Section(id),
-    primary key(id,section_id)
+    course_id varchar(50),
+    foreign key(student_id) references Student(student_id),
+    foreign key(section_id) references Section(section_id),
+    foreign key(course_id) references Course(course_id)
 );
 
-CREATE TABLE IF NOT EXISTS TopicItem(
-	id int,
+CREATE TABLE IF NOT EXISTS TEACHES(
+	professor_id varchar(30),
+    section_id varchar(3),
+    course_id varchar(50),
+    foreign key(professor_id) references professor(professor_id),
+    foreign key(section_id) references section(section_id),
+    foreign key(course_id) references course(course_id)
+);
+
+CREATE TABLE IF NOT EXISTS TOPIC(
+	topic_id int AUTO_INCREMENT primary key,
+    type bool,
+    heading varchar(50),
+    section_id varchar(3),
+    course_id varchar(50),
+    foreign key(section_id) references section(section_id),
+    foreign key(course_id) references course(course_id)
+);
+
+CREATE TABLE IF NOT EXISTS ITEM(
+	item_id int AUTO_INCREMENT,
     topic_id int,
-    body varchar(500),
-    attachment varchar(500),
-    primary key(id,topic_id),
-    foreign key(topic_id) references Topic(id)
-);
-
-CREATE TABLE IF NOT EXISTS Course_Students(
-	student_id varchar(13),
-    course_id varchar(8),
-    foreign key(student_id) references Student(student_id),
-    foreign key(course_id) references Course(id),
-    primary key(student_id,course_id)
-);
-
-CREATE TABLE IF NOT EXISTS Section_Students(
-	student_id varchar(13),
-    section_id varchar(3),
-    foreign key(student_id) references Student(student_id),
-    foreign key(section_id) references Section(id),
-    primary key(student_id,section_id)
-);
-
-CREATE TABLE IF NOT EXISTS Section_Professors(
-	professor_id varchar(6),
-    section_id varchar(3),
-    foreign key(professor_id) references Professor(id),
-    foreign key(section_id) references Section(id),
-    primary key(professor_id,section_id)
+    description varchar(200),
+    file_link varchar(200),
+    foreign key(topic_id) references topic(topic_id),
+    primary key(item_id,topic_id)
 );

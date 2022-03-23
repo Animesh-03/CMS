@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
-import { AdminContext } from '../Contexts/AdminContext';
+import { UserContext } from '../Contexts/UserContext';
 
 const AdminDashboard = () => {
-    const {adminUser, isAdminAuthenticated} = useContext(AdminContext); //Gets the currentUser and isAuthenticated from the UserContext
-    console.log(adminUser);
+    // const {adminUser, isAdminAuthenticated} = useContext(AdminContext); //Gets the currentUser and isAuthenticated from the UserContext
+    // console.log(adminUser);
+
+    const {user, isAuth} = useContext(UserContext);
 
     return ( 
         <div className='admin-dashboard'>
-            <p>Username is {adminUser.username}</p>
-            <p>Authenicated: {isAdminAuthenticated.toString()}</p>
+            <p>Username is {user.username}</p>
+            <p>Authenicated: {isAuth.toString()}</p>
         </div>
      );
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');   //Used to access environment variables in env
 const cors = require('cors');   //Enables frontend to send requests to backend
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const app = express();
 dotenv.config();    //Configure backend by getting the .env file
@@ -17,10 +17,11 @@ app.use(cors());    //Enable CORS
 
 const PORT = process.env.PORT; //Acess the PORT variable in the .env
 
-app.get("/", (req,res) => {
+app.get("/login/admin", (req,res) => {
     //Get all admins form DB and send to frontend
-    connection.query("SELECT * FROM ADMIN",(error, results, fields) => {
+    connection.query("SELECT * FROM ADMIN", (error, results, fields) => {
         res.json(results);
+        console.log(req);
     });
 });
 

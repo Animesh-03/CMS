@@ -5,7 +5,7 @@ export const AdminContext = createContext();
 class AdminContextProvider extends Component {
     state = { 
         adminUser : {},
-        isAdminAuthenticated : false
+        isAdminAuthenticated : false,
     }
     // Gets the user and isAuth from the local storage(if not null) every time the page reloads
     componentDidMount()
@@ -21,9 +21,11 @@ class AdminContextProvider extends Component {
         }
     }
     //Sets the currentUser to the newUser and stores the new user in local storage
-    changeUser = (newUser) => {
-        this.setState({currentUser: newUser});
+    loginUser = (newUser, callback = null) => {
         localStorage.setItem("adminUser", JSON.stringify(newUser));
+        this.toggleAuth(true);
+        this.setState({currentUser: newUser});
+        setTimeout(callback,10000);
     }
     //Toggles isAuthenticated and sets it to local storage
     toggleAuth = (bool) => {
@@ -33,7 +35,7 @@ class AdminContextProvider extends Component {
 
     render() { 
         return (
-            <AdminContext.Provider value={{...this.state, changeUser: this.changeUser, toggleAuth: this.toggleAuth}}>
+            <AdminContext.Provider value={{...this.state, loginUser: this.loginUser, toggleAuth: this.toggleAuth}}>
                 {this.props.children}
             </AdminContext.Provider>
         );
