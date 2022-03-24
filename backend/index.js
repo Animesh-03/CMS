@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');   //Used to access environment variables in env
 const cors = require('cors');   //Enables frontend to send requests to backend
 const mysql = require('mysql2');
+const res = require('express/lib/response');
 
 const app = express();
 dotenv.config();    //Configure backend by getting the .env file
@@ -34,20 +35,23 @@ app.post("/add/student", (req,res) => {
         res.json(results);
     });
 });
-
+//URL to view all students
 app.get("/view/student/all", (req,res) => {
+    //If name parameter is null then get all students else get the students whose first or last name matches
     if(req.query.name != null)
-    {
+    {  
+        //Query was too long so stored in a separate string
         const query = connection.format("SELECT * FROM STUDENT WHERE FIRST_NAME LIKE '" + "%" + req.query.name + "%'" + "OR LAST_NAME LIKE '" + "%" + req.query.name + "%'" );
+        //Gets all the students with the given name
         connection.execute(query, (error,results,fields) => {
             res.json(results);
         });
     }
     else
-    {
+    {   //Gets all the students
         connection.execute("SELECT * FROM STUDENT", (error,results,fields) => {
             res.json(results);
-            console.log(error + "1");
+            console.log(error);
         });
     }
 });
@@ -58,9 +62,14 @@ app.get("/view/student/:num", (req,res) => {
     connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.params.num], (error,results,fields) => {
         res.json(results);
         // console.log(error);
-    })
+    });
 });
 
-// app.delete("delete/student",)
+app.delete("/delete/student",(req,res) => {
+    connection.execute("DELETE FROM STUDENT WHERE STUDENT_ID=?",[req.body.student_id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+})
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));
