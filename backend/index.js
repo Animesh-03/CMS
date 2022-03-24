@@ -35,4 +35,13 @@ app.post("/add/student", (req,res) => {
     });
 });
 
+//URL to get students list in admin dashboard
+app.get("/view/student/:num", (req,res) => {
+    //Gets num students from students table
+    connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.params.num], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    })
+})
+
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));
