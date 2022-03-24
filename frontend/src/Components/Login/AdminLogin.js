@@ -11,7 +11,8 @@ const AdminLogin = () => {
     const [password,setPassword] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault(); //Prevents page from reloading on its own
+        //Prevents page from reloading on its own
+        e.preventDefault(); 
         //Sends a request to get the user with the username given
         axios.post("http://localhost:3000/login/admin",{
             data: {username: username}
@@ -26,6 +27,8 @@ const AdminLogin = () => {
             {
                 alert("Invalid username/password");                
             }
+        }).catch(error => {
+            alert("Something went wrong. Try again later");
         });
 
 
