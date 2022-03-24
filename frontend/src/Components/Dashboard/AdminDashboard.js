@@ -26,7 +26,7 @@ const AdminDashboard = () => {
             <div className='students-list'>
                 <h2>Students</h2>
                 {/*Creates a list of <p> tags with student's first name in them */}
-                {students.map((st) => <p key={st.student_id}>{st.first_name}</p>)}
+                {students.map((st) => <p id='student-list-item' key={st.student_id} onClick={() => navigate("/view/student/" + st.student_id)}>{st.first_name}-{st.student_id}</p>)}
                 <button className='view-all-students' onClick={() => navigate("/admin/view/student/all")}>View All</button>
             </div>
             <br /><br />

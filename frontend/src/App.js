@@ -8,6 +8,7 @@ import ProfessorLogin from './Components/Login/ProfessorLogin';
 import AdminDashboard from './Components/Dashboard/AdminDashboard';
 import UserContextProvider from './Components/Contexts/UserContext';
 import AddStudent from './Components/Dashboard/Add Entity/AddStudent';
+import ViewAllStudents from './Components/ViewEntity/ViewAllStudents';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/professor" element={<ProfessorLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/add/student" element={<AddStudent />} />
+            <Route path="/admin/view/student/all" element={<ViewAllStudents />} />
 
           </Routes>
         </Router>

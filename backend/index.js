@@ -35,13 +35,32 @@ app.post("/add/student", (req,res) => {
     });
 });
 
+app.get("/view/student/all", (req,res) => {
+    if(req.query.name != null)
+    {
+        const query = connection.format("SELECT * FROM STUDENT WHERE FIRST_NAME LIKE '" + "%" + req.query.name + "%'" + "OR LAST_NAME LIKE '" + "%" + req.query.name + "%'" );
+        connection.execute(query, (error,results,fields) => {
+            res.json(results);
+        });
+    }
+    else
+    {
+        connection.execute("SELECT * FROM STUDENT", (error,results,fields) => {
+            res.json(results);
+            console.log(error + "1");
+        });
+    }
+});
+
 //URL to get students list in admin dashboard
 app.get("/view/student/:num", (req,res) => {
     //Gets num students from students table
     connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.params.num], (error,results,fields) => {
         res.json(results);
-        console.log(error);
+        // console.log(error);
     })
-})
+});
+
+// app.delete("delete/student",)
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));
