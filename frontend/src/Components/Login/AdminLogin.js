@@ -20,7 +20,7 @@ const AdminLogin = () => {
             //If a user is found with the given username and password matches then login the admin
             if(res.data.length !== 0 && password === res.data[0].password)
             {
-                loginUser({username: username});
+                loginUser({username: username, role: "admin"});
                 navigate("/admin/dashboard");
             }
             else

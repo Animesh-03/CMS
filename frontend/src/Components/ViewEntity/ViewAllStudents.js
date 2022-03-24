@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { UserContext } from '../Contexts/UserContext';
 
 const ViewAllStudents = () => {
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [students,setStudents] = useState([]);
@@ -57,7 +59,7 @@ const ViewAllStudents = () => {
                     return (
                         <div key={st.student_id}>
                             <p id='student-list-item' key={st.student_id} onClick={() => navigate("/view/student/" + st.student_id)}>{st.first_name}-{st.student_id}</p>
-                            <button  className='delete-student' onClick={() => deleteStudent(st.student_id)}>Delete</button>
+                            {user.role === "admin" && <button  className='delete-student' onClick={() => deleteStudent(st.student_id)}>Delete</button>}
                         </div>
                     )
                 }) : <p>Not Found</p>}

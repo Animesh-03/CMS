@@ -61,7 +61,6 @@ app.get("/view/student/:num", (req,res) => {
     //Gets num students from students table
     connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.params.num], (error,results,fields) => {
         res.json(results);
-        // console.log(error);
     });
 });
 
