@@ -2,7 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');   //Used to access environment variables in env
 const cors = require('cors');   //Enables frontend to send requests to backend
 const mysql = require('mysql2');
-const res = require('express/lib/response');
 
 const app = express();
 dotenv.config();    //Configure backend by getting the .env file
@@ -57,18 +56,60 @@ app.get("/view/student/all", (req,res) => {
 });
 
 //URL to get students list in admin dashboard
-app.get("/view/student/:num", (req,res) => {
+app.get("/view/student", (req,res) => {
     //Gets num students from students table
-    connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.params.num], (error,results,fields) => {
+    connection.execute("SELECT * FROM STUDENT LIMIT ?",[req.query.num], (error,results,fields) => {
         res.json(results);
     });
 });
 
+//URL to delete student with given ID
 app.delete("/delete/student",(req,res) => {
+    //Deletes the student having the given student_id
     connection.execute("DELETE FROM STUDENT WHERE STUDENT_ID=?",[req.body.student_id], (error,results,fields) => {
         res.json(results);
         console.log(error);
     });
-})
+});
+
+//URL to get num professors
+app.get("/view/professor/", (req,res) => {
+    //Gets num professors from the rofessor table
+    connection.execute("SELECT * FROM PROFESSOR LIMIT ?",[req.query.num], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+app.post("/add/professor", (req,res) => {
+    connection.execute("INSERT INTO PROFESSOR VALUES(?, ?, ?, ?, ?)",[req.body.professor_id, req.body.password, req.body.email, req.body.first_name, req.body.last_name], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+app.get("/view/professor/all", (req,res) => {
+    if(req.query.name != null)
+    {
+        connection.execute("SELECT * FROM PROFESSOR WHERE FIRST_NAME LIKE '" + "%" + req.query.name + "%'" + "OR LAST_NAME LIKE '" + "%" + req.query.name + "%'", (error,results,fields) => {
+            res.json(results);
+            console.log(error);
+        });
+    }
+    else
+    {
+        connection.execute("SELECT * FROM PROFESSOR", (error,results,fields) => {
+            res.json(results);
+            console.log(error);
+        });
+    }
+});
+
+app.delete("/delete/professor", (req,res) => {
+    connection.execute("DELETE FROM PROFESSOR WHERE PROFESSOR_ID=?", [req.body.professor_id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));

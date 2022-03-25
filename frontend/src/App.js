@@ -9,6 +9,8 @@ import AdminDashboard from './Components/Dashboard/AdminDashboard';
 import UserContextProvider from './Components/Contexts/UserContext';
 import AddStudent from './Components/Dashboard/Add Entity/AddStudent';
 import ViewAllStudents from './Components/ViewEntity/ViewAllStudents';
+import AddProfessor from './Components/Dashboard/Add Entity/AddProfessor';
+import ViewAllProfessors from './Components/ViewEntity/ViewAllProfessors';
 
 function App() {
 
@@ -25,7 +27,9 @@ function App() {
             <Route path="/professor" element={<ProfessorLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/add/student" element={<AddStudent />} />
-            <Route path="/admin/view/student/all" element={<ViewAllStudents />} />
+            <Route path="/view/student/all" element={<ViewAllStudents />} />
+            <Route path="/admin/add/professor" element={<AddProfessor />} />
+            <Route path="/view/professor/all" element={<ViewAllProfessors />} />
 
           </Routes>
         </Router>
