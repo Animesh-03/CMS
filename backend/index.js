@@ -80,7 +80,7 @@ app.get("/view/professor/", (req,res) => {
         console.log(error);
     });
 });
-
+//URL to add a professor
 app.post("/add/professor", (req,res) => {
     connection.execute("INSERT INTO PROFESSOR VALUES(?, ?, ?, ?, ?)",[req.body.professor_id, req.body.password, req.body.email, req.body.first_name, req.body.last_name], (error,results,fields) => {
         res.json(results);
@@ -88,9 +88,12 @@ app.post("/add/professor", (req,res) => {
     });
 });
 
+//URL to get all professors
 app.get("/view/professor/all", (req,res) => {
+    //If name in search query is null then get all the professors else get the professors whose first name or last name matches
     if(req.query.name != null)
     {
+        //Gets all the professors whose name matches with the given name
         connection.execute("SELECT * FROM PROFESSOR WHERE FIRST_NAME LIKE '" + "%" + req.query.name + "%'" + "OR LAST_NAME LIKE '" + "%" + req.query.name + "%'", (error,results,fields) => {
             res.json(results);
             console.log(error);
@@ -98,6 +101,7 @@ app.get("/view/professor/all", (req,res) => {
     }
     else
     {
+        //Gets all the professors
         connection.execute("SELECT * FROM PROFESSOR", (error,results,fields) => {
             res.json(results);
             console.log(error);
@@ -105,11 +109,52 @@ app.get("/view/professor/all", (req,res) => {
     }
 });
 
+//URL to delete a professor
 app.delete("/delete/professor", (req,res) => {
+    //Deletes a professor with the given id
     connection.execute("DELETE FROM PROFESSOR WHERE PROFESSOR_ID=?", [req.body.professor_id], (error,results,fields) => {
         res.json(results);
         console.log(error);
     });
 });
+
+//URL to get num courses
+app.get("/view/course",(req,res) => {
+    //Gets num courses from courses table
+    connection.execute("SELECT * FROM COURSE LIMIT ?",[req.query.num], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+//URL to view all courses
+app.get("/view/course/all", (req,res) => {
+    //If name parameter is not null then get all the courses with matching names else get all courses
+    if(req.query.name != null)
+    {
+        connection.execute("SELECT * FROM COURSE WHERE COURSE_NAME LIKE '%" + req.query.name + "%'", (error,results,fields) => {
+            res.json(results);
+            console.log(error);
+        });
+    }
+    else
+    {
+        connection.execute("SLELCT * FROM COURSE", (error,results,fields) => {
+            res.json(results);
+            console.log(error);
+        })
+    }
+});
+
+//URL to add course
+app.post("/add/course", (req,res) => {
+    //Adds a course into course table
+    connection.execute("INSERT INTO COURSE VALUES(?, ?, ?)",[req.body.course_id, req.body.ic, req.body.course_name], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+// app.delete()
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));

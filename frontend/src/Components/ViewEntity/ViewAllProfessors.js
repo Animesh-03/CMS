@@ -10,10 +10,12 @@ const ViewAllProfessors = () => {
     const [professors,setProfessors] = useState([]);
     const [searchName,setSearchName] = useState("");
 
+    //Get all the professors on page load
     useEffect(() => {
         getAllProfessors();
     },[]);
 
+    //Get all the professors
     const getAllProfessors = () => {
         axios.get("http://localhost:3000/view/professor/all")
             .then(res => {
@@ -22,7 +24,7 @@ const ViewAllProfessors = () => {
                 alert("Something went wrong. Try again later");
             });
     }
-
+    //Get all the professors with the name
     const getProfessorsWithName = (name) => {
         axios.get("http://localhost:3000/view/professor/all?name=" + name)
             .then(res => {
@@ -31,7 +33,7 @@ const ViewAllProfessors = () => {
                 alert("Something went wrong. Try again later");
             });
     }
-
+    //Delete a professor with the ID
     const deleteProfessor = (professor_id) => {
         axios.delete("http://localhost:3000/delete/professor",{data:{professor_id: professor_id}})
             .then(res => {
@@ -56,7 +58,7 @@ const ViewAllProfessors = () => {
                             <p key={prof.professor_id} onClick={() => navigate("/view/professor/" + prof.professor_id)} >{prof.first_name}-{prof.professor_id}</p>
                             {user.role === "admin" && <button  className='delete-professor' onClick={() => deleteProfessor(prof.professor_id)}>Delete</button>}
                         </div>
-                    )
+                    );
                 })}
             </div>
         </div>

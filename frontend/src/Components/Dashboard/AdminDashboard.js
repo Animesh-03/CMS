@@ -9,6 +9,7 @@ const AdminDashboard = () => {
 
     const [students,setStudents] = useState([]);
     const [professors,setProfessors] = useState([]);
+    const [courses,setCourses] = useState([]);
 
     useEffect(() => {
         //Get first 5 students
@@ -25,6 +26,14 @@ const AdminDashboard = () => {
                 setProfessors(res.data);
             }).catch(error => {
                 alert("Error getting professors. Try again later");
+            });
+
+        //Get first 5 courses
+        axios.get("http://localhost:3000/view/course?num=5")
+            .then(res => {
+                setCourses(res.data);
+            }).catch(error => {
+                alert("Error getting courses. Try again later");
             });
 
     },[])
@@ -48,6 +57,14 @@ const AdminDashboard = () => {
                 {professors.map(prof => <p key={prof.professor_id} onClick={() => navigate("/view/professor/" + prof.professor_id)} >{prof.first_name}-{prof.professor_id}</p>)}
                 <button className='view-all-professors' onClick={() => navigate('/view/professor/all')}>View All</button>
                 <button className='add-professor-redirect' onClick={() => navigate("/admin/add/professor")}>Add Professor</button>
+            </div>
+            <br /><br />
+
+            <div className='course-list'>
+                <h2>Courses</h2>
+                {courses.map(c => <p key={c.course_id} onClick={() => navigate("/view/course/" + c.course_id)}>{c.course_name}</p>)}
+                <button className='view-all-courses' onClick={() => navigate("/view/courses/all")}>View All</button>
+                <button className='add-course-redirect' onClick={() => navigate("/admin/add/course")}>Add Course</button>
             </div>
             
         </div>
