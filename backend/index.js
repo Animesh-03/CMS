@@ -17,7 +17,7 @@ app.use(cors());    //Enable CORS
 app.use(express.urlencoded({extended: true})); // Enables accessing request parameters
 app.use(express.json());
 
-const PORT = process.env.PORT; //Acess the PORT variable in the .env
+const PORT = process.env.PORT || 3000; //Acess the PORT variable in the .env
 
 //URL when admin logins
 app.post("/login/admin", (req,res) => {
@@ -155,6 +155,26 @@ app.post("/add/course", (req,res) => {
     });
 });
 
-// app.delete()
+//URL to delete a course
+app.delete("/delete/course", (req,res) => {
+    //Fill code to delete the course from many tables
+    res.send({msg:"ok"});
+});
+
+//URL to login a professor
+app.post("/login/professor", (req,res) => {
+    //Gets the professor haing the professor_id
+    connection.execute("SELECT * FROM PROFESSOR WHERE PROFESSOR_ID=?",[req.body.professor_id], (error, results, fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+app.post("/login/student", (req,res) => {
+    connection.execute("SELECT * FROM STUDENT WHERE STUDENT_ID=?", [req.body.student_id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+})
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));

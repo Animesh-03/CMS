@@ -34,7 +34,13 @@ const ViewAllCourses = () => {
     }
 
     const deleteCourse = (course_id) => {
-
+        axios.delete("http://localhost:3000/delete/course",{data:{
+            course_id: course_id
+        }}).then(res => {
+            getAllCourses();
+        }).catch(error => {
+            alert("Error deleting the course. Try again later");
+        })
     }
 
     return ( 
@@ -53,7 +59,7 @@ const ViewAllCourses = () => {
                             {user.role === "admin" && <button onClick={() =>deleteCourse(c.course_id)}>Delete</button>}
 
                         </div>
-                    )
+                    );
                 })}
             </div>
 

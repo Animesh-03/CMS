@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { UserContext } from '../Contexts/UserContext';
 
@@ -47,8 +47,6 @@ const AdminLogin = () => {
                 <button type='submit' >Login</button> 
             </form>
 
-
-            <Outlet/>
         </div>
     );
 }

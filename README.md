@@ -7,6 +7,5 @@ Before running:
 
 
 To run:
-1. In terminal 1: npx nodemon index.js
-2. In terminal 2: cd frontend
-                  npm start
+1. In terminal 1: npm start
+2. In terminal 2: cd frontend &&  npm start
