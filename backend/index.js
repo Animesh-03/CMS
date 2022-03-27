@@ -169,9 +169,37 @@ app.post("/login/professor", (req,res) => {
         console.log(error);
     });
 });
-
+//URL to login student
 app.post("/login/student", (req,res) => {
+    //Gets the student with the student_id
     connection.execute("SELECT * FROM STUDENT WHERE STUDENT_ID=?", [req.body.student_id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+//URL to get courses by IC
+app.post("/view/course/ic", (req,res) => {
+    //Gets the courses whose ic is given
+    connection.execute("SELECT * FROM COURSE WHERE IC=?",[req.body.ic], (error, results, fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+//URL to get a specific course
+app.get("/view/course/:id", (req,res) => {
+    //Gets the course from id
+    connection.execute("SELECT * FROM COURSE WHERE COURSE_ID=?", [req.params.id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+//URL to get the sections of a course
+app.get("/view/section/all", (req,res) => {
+    //Joins the section and teaches table and gets everything
+    connection.execute("SELECT * FROM SECTION S JOIN TEACHES T ON S.COURSE_ID=T.COURSE_ID AND S.SECTION_ID=T.SECTION_ID WHERE S.COURSE_ID=?",[req.query.course_id], (error,results,fields) => {
         res.json(results);
         console.log(error);
     });

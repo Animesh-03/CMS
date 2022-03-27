@@ -11,10 +11,12 @@ const StudentLogin = () => {
     const [password,setPassword] = useState("");
 
     const handleSubmit = (e) => {
+        //Prevents page from auto reloading
         e.preventDefault();
-
+        //Gets the student having studentID
         axios.post("http://localhost:3000/login/student", {student_id: studentID})
             .then(res => {
+                //If password matches then login and redirect to dashboard
                 if(res.data.length !== 0 && password === res.data[0].password)
                 {
                     const user = {

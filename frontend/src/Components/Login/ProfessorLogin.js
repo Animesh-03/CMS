@@ -11,10 +11,12 @@ const ProfessorLogin = () => {
     const [password,setPassword] = useState("");
 
     const handleSubmit = (e) => {
+        //Prevents page from auto reloading
         e.preventDefault();
-
+        //Gets the professor having professorID
         axios.post("http://localhost:3000/login/professor",{professor_id: professorID})
             .then(res => {
+                //If the password matches then login and redirect to dashboard
                 if(res.data.length !== 0 && password === res.data[0].password)
                 {
                     const user = {
