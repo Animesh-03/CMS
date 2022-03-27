@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import SelectSearch, { fuzzySearch } from 'react-select-search';
 
@@ -19,6 +19,7 @@ const AddCourse = () => {
                 res.data.map(prof => {
                     let obj = {value: prof.professor_id, name: prof.first_name + " " + prof.last_name}
                     profList.push(obj);
+                    return 0;
                 });
 
                 setProfessors(profList);

@@ -47,7 +47,7 @@ const ViewAllProfessors = () => {
         <div className='view-all-professors'>
              <form className='professor-filter-form'>
                 <input className='form-control' placeholder='Enter Name of Professor' onChange={(e) => setSearchName(e.target.value)} />
-                <button className='professor-filter-search-btn' onClick={_ => {getProfessorsWithName(searchName)}}>Search</button>
+                <button className='professor-filter-search-btn' onClick={(e) => {e.preventDefault();getProfessorsWithName(searchName)}}>Search</button>
             </form>
 
             <div className='all-professors'>

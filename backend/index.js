@@ -139,7 +139,7 @@ app.get("/view/course/all", (req,res) => {
     }
     else
     {
-        connection.execute("SLELCT * FROM COURSE", (error,results,fields) => {
+        connection.execute("SELECT * FROM COURSE", (error,results,fields) => {
             res.json(results);
             console.log(error);
         })
