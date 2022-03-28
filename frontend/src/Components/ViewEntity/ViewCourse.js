@@ -42,7 +42,7 @@ const ViewCourse = () => {
                 {sections.map(s => {
                     return (
                         <div key={s.section_id}>
-                            <p key={s.section_id} onClick={() => navigate("/view/course/section/" + s.section_id,{course_id: course_id})}>{course.course_name} {s.section_id}</p>
+                            <p key={s.section_id} onClick={() => navigate("/view/course/section/" + s.section_id,{state:{course_id: course_id}})}>{course.course_name} {s.section_id}</p>
                             {course && course.ic === user.id && <button className='delete-section' onClick={() => deleteSection(s.section_id)}>Delete Section</button>}
                         </div>
                     );

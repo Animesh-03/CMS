@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');   //Used to access environment variables in env
 const cors = require('cors');   //Enables frontend to send requests to backend
 const mysql = require('mysql2');
+const res = require('express/lib/response');
 
 const app = express();
 dotenv.config();    //Configure backend by getting the .env file
@@ -221,6 +222,14 @@ app.post("/add/section/professors", (req,res) => {
             res.json(results)
             console.log(error);
         });
+    });
+});
+
+//URL to get a professor's sections
+app.post("/professor/view/sections", (req,res) => {
+    connection.execute("SELECT * FROM TEACHES T JOIN COURSE C ON T.COURSE_ID=C.COURSE_ID WHERE PROFESSOR_ID=?",[req.body.professor_id], (error, results, fields) => {
+        res.json(results);
+        console.log(error);
     });
 });
 
