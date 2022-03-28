@@ -16,6 +16,7 @@ import ViewAllCourses from './Components/ViewEntity/ViewAllCourses';
 import ProfessorDAshboard from './Components/Dashboard/ProfessorDashbaord';
 import StudentDashboard from './Components/Dashboard/StudentDashboard';
 import ViewCourse from './Components/ViewEntity/ViewCourse';
+import AddSection from './Components/Add Entity/AddSection';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/professor/dashboard" element={<ProfessorDAshboard />} />
             <Route path="/student/dashboard" element={<StudentDashboard />} />
             <Route path="/view/course/:course_id" element={<ViewCourse />} />
+            <Route path="/professor/add/section" element={<AddSection />} />
 
           </Routes>
         </Router>

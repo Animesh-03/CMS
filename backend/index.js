@@ -199,10 +199,26 @@ app.get("/view/course/:id", (req,res) => {
 //URL to get the sections of a course
 app.get("/view/section/all", (req,res) => {
     //Joins the section and teaches table and gets everything
-    connection.execute("SELECT * FROM SECTION S JOIN TEACHES T ON S.COURSE_ID=T.COURSE_ID AND S.SECTION_ID=T.SECTION_ID WHERE S.COURSE_ID=?",[req.query.course_id], (error,results,fields) => {
+    connection.execute("SELECT * FROM SECTION WHERE COURSE_ID=?",[req.query.course_id], (error,results,fields) => {
         res.json(results);
         console.log(error);
     });
-})
+});
+
+//URL to add a section to a course
+app.post("/add/section", (req,res) => {
+    //Add a section with section id and course id
+    connection.execute("INSERT INTO SECTION VALUES(?, ?)", [req.body.section_id, req.body.course_id], (error,results,fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+//URL to add professors to teaches table
+app.post("/add/section/professors", (req,res) => {
+    //For each professor in the list add to teaches table
+    req.body.professors.map(p => {
+        connection.execute("INSERT INTO TEACHES VALUES(?,?,?)",[p,req.body.section_id,req.body.course_id], () => res.send({msg:"ok"}));
+    });
+});
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));
