@@ -42,17 +42,22 @@ const AddSection = () => {
         e.preventDefault();
 
         let section_id = sectionType + sectionNumber;
+
+        let profList = [];
+        profList.push(user.id);
+        
         if(isRoot){
             section_id = 'L';
-            setSectionProfessors([user.id]);
         }
 
         axios.post("http://localhost:3000/add/section",{
             section_id: section_id,
             course_id: location.state.course_id
         }).then(res => {
+            console.log(profList);
+
             axios.post("http://localhost:3000/add/section/professors",{
-                professors: sectionProfessors,
+                professors: isRoot ? profList : sectionProfessors,
                 section_id: section_id,
                 course_id: location.state.course_id
             }).then(res => {

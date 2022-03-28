@@ -199,7 +199,7 @@ app.get("/view/course/:id", (req,res) => {
 //URL to get the sections of a course
 app.get("/view/section/all", (req,res) => {
     //Joins the section and teaches table and gets everything
-    connection.execute("SELECT * FROM SECTION WHERE COURSE_ID=?",[req.query.course_id], (error,results,fields) => {
+    connection.execute("SELECT * FROM SECTION WHERE COURSE_ID=? ORDER BY SECTION_ID",[req.query.course_id], (error,results,fields) => {
         res.json(results);
         console.log(error);
     });
@@ -217,7 +217,10 @@ app.post("/add/section", (req,res) => {
 app.post("/add/section/professors", (req,res) => {
     //For each professor in the list add to teaches table
     req.body.professors.map(p => {
-        connection.execute("INSERT INTO TEACHES VALUES(?,?,?)",[p,req.body.section_id,req.body.course_id], () => res.send({msg:"ok"}));
+        connection.execute("INSERT INTO TEACHES VALUES(?,?,?)",[p,req.body.section_id,req.body.course_id], (error,results,fields) => {
+            res.json(results)
+            console.log(error);
+        });
     });
 });
 
