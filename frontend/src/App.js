@@ -17,6 +17,9 @@ import ProfessorDAshboard from './Components/Dashboard/ProfessorDashbaord';
 import StudentDashboard from './Components/Dashboard/StudentDashboard';
 import ViewCourse from './Components/ViewEntity/ViewCourse';
 import AddSection from './Components/Add Entity/AddSection';
+import ViewSection from './Components/ViewEntity/ViewSection';
+import AddTopic from './Components/Add Entity/AddTopic';
+import AddItem from './Components/Add Entity/AddItem';
 
 function App() {
 
@@ -42,6 +45,9 @@ function App() {
             <Route path="/student/dashboard" element={<StudentDashboard />} />
             <Route path="/view/course/:course_id" element={<ViewCourse />} />
             <Route path="/professor/add/section" element={<AddSection />} />
+            <Route path="/view/course/section/:section_id" element={<ViewSection />} />
+            <Route path="/view/course/section/:section_id/add/topic" element={<AddTopic />} />
+            <Route path="/view/course/section/:section_id/add/topic/item" element={<AddItem />} />
 
           </Routes>
         </Router>
