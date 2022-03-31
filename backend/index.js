@@ -287,6 +287,29 @@ app.post("/section/add/topic/item", (req, res) => {
         res.json(results);
         console.log(error);
     })
-})
+});
+
+//URL to register student to section
+app.post("/student/add/section", (req, res) => {
+    connection.execute("INSERT INTO STUDIES VALUES(?, ?, ?)", [req.body.student_id, req.body.section_id, req.body.course_id], (error, results, fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+//URL to get a student's sections
+app.post("/student/view/section", (req,res) => {
+    connection.execute("SELECT * FROM STUDIES S JOIN COURSE C ON S.COURSE_ID=C.COURSE_ID WHERE STUDENT_ID=?",[req.body.student_id], (error,results, fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
+
+app.delete("/student/remove/section", (req, res) => {
+    connection.execute("DELETE FROM STUDIES WHERE SECTION_ID=? AND COURSE_ID=? AND STUDENT_ID=?", [req.body.section_id, req.body.course_id, req.body.student_id], (error, results, fields) => {
+        res.json(results);
+        console.log(error);
+    });
+});
 
 app.listen(PORT,() => console.log("Backend running at port: " + PORT));

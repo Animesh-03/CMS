@@ -32,6 +32,15 @@ const ViewCourse = () => {
         //Fill code to delete section
     }
 
+    const registerSection = (section_id) => {
+        axios.post("http://localhost:3000/student/add/section",{student_id: user.student_id, section_id: section_id, course_id: course_id})
+            .then(res => {
+                navigate(-1);
+            }).catch(error => {
+                alert("Error getting sections. Try again later");
+            });
+    }
+
     return ( 
         <div className='view-course'>
             <h1> Name: {course && course.course_name}</h1>
@@ -44,6 +53,7 @@ const ViewCourse = () => {
                         <div key={s.section_id}>
                             <p key={s.section_id} onClick={() => navigate("/view/course/section/" + s.section_id,{state:{course_id: course_id}})}>{course.course_name} {s.section_id}</p>
                             {course && course.ic === user.id && <button className='delete-section' onClick={() => deleteSection(s.section_id)}>Delete Section</button>}
+                            {course && user.role === 'student' && <button className='student-section-register'  onClick={_ => registerSection(s.section_id)}>Register</button> }
                         </div>
                     );
                 })}
