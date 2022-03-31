@@ -10,7 +10,7 @@ const ViewSection = () => {
     const navigate = useNavigate();
 
     const [section,setSection] = useState([]);
-
+    //Get all the section related info
     const getSectionInfo = () => {
         axios.post("http://localhost:3000/view/course/section",{course_id: location.state.course_id, section_id: section_id})
             .then(res => {
@@ -24,6 +24,7 @@ const ViewSection = () => {
         getSectionInfo();
     },[]);
 
+    //Check if the user is allowed to edit
     const editPrivileges = () => {
         let bool = false;
         section.professors.map(p => {

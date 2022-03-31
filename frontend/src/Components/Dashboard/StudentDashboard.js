@@ -19,6 +19,7 @@ const StudentDashboard = () => {
        if(!loading) getStudentSections();
     },[loading])
 
+    //Get all the courses
     const getAllCourses = () => {
         axios.get("http://localhost:3000/view/course/all")
             .then(res => {
@@ -28,6 +29,7 @@ const StudentDashboard = () => {
             });
     }
 
+    //Search through the courses by name
     const getCoursesWithName = (searchName) => {
         // e.preventDefault();
 
@@ -40,6 +42,7 @@ const StudentDashboard = () => {
             });
     }
 
+    //Get the sections the student is enrolled in
     const getStudentSections = () => {
         axios.post("http://localhost:3000/student/view/section",{student_id: user.student_id})
             .then(res => {
@@ -49,6 +52,7 @@ const StudentDashboard = () => {
             });
     }
 
+    //Remove a section the student is enrolled in
     const removeSection = (section_id, course_id) => {
         axios.delete("http://localhost:3000/student/remove/section", {data: {section_id: section_id, course_id: course_id, student_id: user.student_id}})
             .then(res => {

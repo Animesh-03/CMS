@@ -19,6 +19,7 @@ const ProfessorDAshboard = () => {
         }   
     },[loading,user]);
 
+    //Get the courses the prof is IC of
     const getICCourses = () => {
         axios.post("http://localhost:3000/view/course/ic",{ic: user.id})
             .then(res => {
@@ -28,6 +29,7 @@ const ProfessorDAshboard = () => {
             });
     }
 
+    //Get the sections the prof is assigned to
     const getProfessorSections = () => {
         axios.post("http://localhost:3000/professor/view/sections", {professor_id: user.id})
             .then(res => {

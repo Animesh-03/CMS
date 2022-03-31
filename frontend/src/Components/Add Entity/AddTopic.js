@@ -10,6 +10,7 @@ const AddTopic = () => {
     const [topicType,setTopicType] = useState(0);
     const [heading,setHeading] = useState('');
 
+    //The object needed for select search component
     const typeOptions = [
         {name: 'Announcement', value: 0},
         {name: 'Standard', value: 1}

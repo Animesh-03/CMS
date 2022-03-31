@@ -281,7 +281,7 @@ app.post("/section/add/topic", (req, res) => {
         console.log(error);
     });
 });
-
+//URL to add an item to topic
 app.post("/section/add/topic/item", (req, res) => {
     connection.execute("INSERT INTO ITEM (TOPIC_ID, DESCRIPTION, FILE_LINK) VALUES(?, ? ,?)",[req.body.topic_id, req.body.description, req.body.file_link], (error, results, fields) => {
         res.json(results);
@@ -305,6 +305,7 @@ app.post("/student/view/section", (req,res) => {
     });
 });
 
+//URL to unenrol from a section from studies table
 app.delete("/student/remove/section", (req, res) => {
     connection.execute("DELETE FROM STUDIES WHERE SECTION_ID=? AND COURSE_ID=? AND STUDENT_ID=?", [req.body.section_id, req.body.course_id, req.body.student_id], (error, results, fields) => {
         res.json(results);
