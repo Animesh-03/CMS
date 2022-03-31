@@ -15,7 +15,6 @@ const ViewSection = () => {
         axios.post("http://localhost:3000/view/course/section",{course_id: location.state.course_id, section_id: section_id})
             .then(res => {
                 setSection(res.data);
-                console.log(res.data);
             }).catch(error => {
                 alert("Error getting section. Try again later");
             });
@@ -44,13 +43,23 @@ const ViewSection = () => {
             <div className='topics'>
                 <h1>Topics</h1>
                 {section.length && section.topics.length > 0 && section.topics.map(t => {
+                    let topic = t.topic;
                     return (
-                        <div key={t.topic_id} className='topic'>
-                            <h3>{t.heading}</h3>
-                            
+                        <div key={topic.topic_id} className='topic'>
+                            <h3>{topic.heading}</h3>
+                            {t.items.map(i => {
+                                return (
+                                    <div key={topic.topic_id+i.item_id} className='topic-item'>
+                                        <p>{i.description}</p>
+                                        <p>{i.file_link}</p>
+                                        <br/>
+                                    </div>
+                                    
+                                );
+                            })}
                             
 
-                            {(section.length > 0 && editPrivileges()) && <button className='add-topic-item-btn' onClick={() => navigate("add/topic/item", {state: {topic_id: t.topic_id}})}>Add Item</button>}
+                            {(section.length > 0 && editPrivileges()) && <button className='add-topic-item-btn' onClick={() => navigate("add/topic/item", {state: {topic_id: t.topic.topic_id}})}>Add Item</button>}
                         </div>
                     )
                 })}

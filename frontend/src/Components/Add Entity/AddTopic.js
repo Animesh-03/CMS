@@ -12,7 +12,7 @@ const AddTopic = () => {
 
     const typeOptions = [
         {name: 'Announcement', value: 0},
-        {name: 'Standard', value: 'Standard'}
+        {name: 'Standard', value: 1}
     ]
 
     const handleSubmit = (e) => {

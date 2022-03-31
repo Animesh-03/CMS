@@ -238,20 +238,28 @@ app.post("/view/course/section", (req,res) => {
     //Chains SQL queries required to get all info of the section
     connection.execute("SELECT PROFESSOR_ID AS professor_id FROM TEACHES WHERE SECTION_ID=? AND COURSE_ID=?",[req.body.section_id, req.body.course_id], (error1, results1, fields1) => {
         console.log(error1);
+        var topics = [];
         connection.execute("SELECT * FROM TOPIC WHERE SECTION_ID=? AND COURSE_ID=?",[req.body.section_id,req.body.course_id], (error2, results2, fields2) => {
             console.log(error2);
-            var items = new Array();
+            
             for(let i = 0; i < results2.length; i++)
             {
                 connection.execute("SELECT * FROM ITEM WHERE TOPIC_ID=?",[results2[i].topic_id], (error3,results3,fields3) => {
-                    items.push(results3);
+                    let topic = {
+                        topic: results2[i],
+                        items: []
+                    };
+
+                    results3.forEach(item => {
+                        topic.items.push(item);
+                    });
+                    topics.push(topic);
 
                     if(i === results2.length - 1)
                     {
                         const obj = {
                             professors: results1,
-                            topics: results2,
-                            items: items,
+                            topics: topics,
                             length: 3
                         };
                         
@@ -275,7 +283,7 @@ app.post("/section/add/topic", (req, res) => {
 });
 
 app.post("/section/add/topic/item", (req, res) => {
-    connection.execute("INSERT INTO ITEM (TOPIC_ID, DESCRIPTION, FILE_LINK) VALUES(?, ? ,?)",[req.body.item_id, req.body.description, req.body.file_link], (error, results, fields) => {
+    connection.execute("INSERT INTO ITEM (TOPIC_ID, DESCRIPTION, FILE_LINK) VALUES(?, ? ,?)",[req.body.topic_id, req.body.description, req.body.file_link], (error, results, fields) => {
         res.json(results);
         console.log(error);
     })

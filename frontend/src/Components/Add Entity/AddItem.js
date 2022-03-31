@@ -12,7 +12,7 @@ const AddItem = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post("http://localhost:3000/section/add/topic/item", {item_id: location.state.topic_id, description: description, file_link: file_link})
+        axios.post("http://localhost:3000/section/add/topic/item", {topic_id: location.state.topic_id, description: description, file_link: file_link})
             .then(res => {
                 navigate(-1);
             }).catch(error => {
